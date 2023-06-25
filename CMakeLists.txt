@@ -12,6 +12,7 @@ find_package(Torch REQUIRED)
 message(STATUS "LibTorch version: ${Torch_VERSION}")
 
 add_executable(${PROJECT_NAME}
+        src/autograd.cc
         src/creating_tensors.cc
         src/cuda_basics.cc
         src/math_opers.cc

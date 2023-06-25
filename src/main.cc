@@ -1,3 +1,4 @@
+#include "autograd.hh"
 #include "creating_tensors.hh"
 #include "cuda_basics.hh"
 #include "math_opers.hh"
@@ -19,5 +20,8 @@ int main() {
 
   CudaBasics cuda_basics;
   cuda_basics.print();
+
+  /* AutoGrad auto_grad;
+  auto_grad.print(); */
   return 0;
 }

@@ -20,7 +20,25 @@ void CudaBasics::print() {
   // std::cout << "CUDA device name: " << cuda_device_name << std::endl;
 
   // Get the current CUDA device
-  torch::Device current_cuda_device(torch::kCUDA);
-  std::cout << "Current CUDA device: " << +current_cuda_device.index()
-            << std::endl;
+  torch::Device current_cuda_device_one(torch::kCUDA, 0);
+
+  /* std::cout << "Current CUDA device: " << +current_cuda_device_one.index()
+            << std::endl; */
+
+  const auto props = at::cuda::getCurrentDeviceProperties();
+  std::cout << "Current CUDA device: " << props->name << std::endl;
+
+  auto start = std::chrono::high_resolution_clock::now();
+  std::ios_base::sync_with_stdio(false);
+
+  for (int i = 0; i < 1000; i++) {
+    auto tensor_one = torch::rand({1000, 1000}, current_cuda_device_one);
+    auto tensor_two = torch::rand({1000, 1000}, current_cuda_device_one);
+    auto tensor_three = tensor_one * tensor_two;
+  }
+
+  auto finish = std::chrono::high_resolution_clock::now();
+  auto elapsed =
+      std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
+  std::cout << "Elapsed time: " << elapsed.count() << " ms\n";
 }
